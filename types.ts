@@ -98,6 +98,39 @@ export interface MarketTrajectory {
   keyDrivers: string[];
 }
 
+export interface StrikeReconstruction {
+  estimatedStrikeTonnage: number; // e.g. 138 metric tons
+  nominalMintTonnage: number; // e.g. 135 metric tons
+  dieAlignmentAngleDeg: number; // e.g. 0.12 degrees
+  planchetHardnessVickers: number; // e.g. 86 HV
+  collarEngagementPct: number; // 0 - 100%
+  reliefFillCompleteness: number; // 0 - 100%
+  strikeSignatureStatus: 'Full Mint Strike' | 'Weak Center / High-Pressure Rim' | 'Late Die State Flow' | 'Misaligned / Rotated Die' | 'Suspect Low-Pressure Strike';
+  strikeReconstructionNotes: string;
+  pressureZoneBreakdown: {
+    zone: string;
+    fillPct: number;
+    pressureRating: 'Optimal' | 'Soft' | 'High Stress';
+  }[];
+}
+
+export interface ProvenanceEvent {
+  eraOrDate: string;
+  eventTitle: string;
+  institutionOrVenue: string;
+  gradeAtEvent: string;
+  notes: string;
+  verified: boolean;
+}
+
+export interface ProvenanceChain {
+  pedigreeStatus: 'Documented Type Census' | 'Notable Numismatic Pedigree' | 'Fresh Estate / Unrecorded' | 'Prior Slab Crossover Candidate';
+  crossoverEligibility: string;
+  insuranceReplacementValue: string;
+  registryCompetitiveness: string;
+  chainEvents: ProvenanceEvent[];
+}
+
 export interface SingleCoinData {
   coinIndex?: number; // 1 to 25 sequential identification in image
   boundingBox?: [number, number, number, number]; // [ymin, xmin, ymax, xmax] normalized 0-1000
@@ -139,6 +172,8 @@ export interface SingleCoinData {
   graderConsensus?: MultiModelGraderConsensus;
   restorationAdvisor?: RestorationAdvisor;
   marketTrajectory?: MarketTrajectory;
+  strikeReconstruction?: StrikeReconstruction;
+  provenanceChain?: ProvenanceChain;
 }
 
 export interface MultiCoinAnalysisResult {

@@ -12,6 +12,8 @@ import {
   Layers,
   Flame,
   FileSpreadsheet,
+  FileText,
+  Share2,
   Printer,
   CheckCircle2,
   AlertTriangle,
@@ -30,6 +32,7 @@ interface MultiCoinTrayExplorerProps {
   onSelectCoin: (index: number) => void;
   onOpenConsult?: () => void;
   onOpenCertModal?: () => void;
+  onOpenReportModal?: (scope: 'batch' | 'single', coinIndex?: number) => void;
 }
 
 export const MultiCoinTrayExplorer: React.FC<MultiCoinTrayExplorerProps> = ({
@@ -39,6 +42,7 @@ export const MultiCoinTrayExplorer: React.FC<MultiCoinTrayExplorerProps> = ({
   onSelectCoin,
   onOpenConsult,
   onOpenCertModal,
+  onOpenReportModal,
 }) => {
   const [zoomLevel, setZoomLevel] = useState<number>(1);
   const [showReticles, setShowReticles] = useState<boolean>(true);
@@ -158,24 +162,48 @@ export const MultiCoinTrayExplorer: React.FC<MultiCoinTrayExplorerProps> = ({
           </p>
         </div>
 
-        {/* Action Buttons: CSV Export & Print */}
+        {/* Action Buttons: PDF/JSON Report, CSV Export & Certificate */}
         <div className="flex items-center gap-2 flex-wrap">
+          {onOpenReportModal && (
+            <button
+              id="tray-open-report-studio-btn"
+              onClick={() => onOpenReportModal('batch')}
+              className="px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-black text-xs font-black uppercase tracking-wider flex items-center gap-1.5 transition-all active:scale-95 shadow-[0_0_20px_rgba(245,158,11,0.3)]"
+              title="Generate & Share Professional PDF or JSON Summary Report for this 25-Coin Batch"
+            >
+              <FileText size={14} />
+              <span>PDF / JSON Report</span>
+            </button>
+          )}
+
+          {onOpenReportModal && (
+            <button
+              id="tray-single-coin-report-btn"
+              onClick={() => onOpenReportModal('single', focusedCoinIndex)}
+              className="px-3 py-2 rounded-xl bg-indigo-500/20 hover:bg-indigo-500/30 border border-indigo-500/40 text-indigo-200 text-xs font-bold flex items-center gap-1.5 transition-all active:scale-95"
+              title="Generate Report for Currently Selected Coin Only"
+            >
+              <Share2 size={13} className="text-indigo-400" />
+              <span>Coin #{focusedCoinIndex + 1} Report</span>
+            </button>
+          )}
+
           <button
             onClick={exportBatchCsv}
-            className="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-750 border border-slate-700 hover:border-slate-600 text-slate-200 text-xs font-bold flex items-center gap-2 transition-all active:scale-95 shadow-sm"
+            className="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-750 border border-slate-700 hover:border-slate-600 text-slate-200 text-xs font-bold flex items-center gap-1.5 transition-all active:scale-95 shadow-sm"
             title="Download full 25-coin catalog as spreadsheet"
           >
             <FileSpreadsheet size={14} className="text-emerald-400" />
-            <span>Export CSV</span>
+            <span>CSV</span>
           </button>
 
           {onOpenCertModal && (
             <button
               onClick={onOpenCertModal}
-              className="px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-black text-xs font-black uppercase tracking-wider flex items-center gap-1.5 transition-all active:scale-95 shadow-[0_0_15px_rgba(245,158,11,0.25)]"
+              className="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-amber-500/40 text-amber-300 text-xs font-bold flex items-center gap-1.5 transition-all active:scale-95"
             >
               <Award size={14} />
-              <span>Batch Dossier</span>
+              <span>Certificate</span>
             </button>
           )}
         </div>

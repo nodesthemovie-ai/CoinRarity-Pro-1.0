@@ -3,14 +3,14 @@ import { motion } from 'motion/react';
 import {
   CheckCircle2,
   X,
+  ArrowLeft,
   Printer,
   Copy,
   Check,
   ShieldCheck,
   Sparkles,
   Bot,
-  AlertTriangle,
-  Award,
+  FileText,
 } from 'lucide-react';
 import { MultiCoinAnalysisResult } from '../types';
 import { CoinSlabView } from './CoinSlabView';
@@ -21,6 +21,7 @@ interface CertificationModalProps {
   reverseImage?: string;
   onClose: () => void;
   onOpenConsultation?: () => void;
+  onOpenReportStudio?: () => void;
 }
 
 export const CertificationModal: React.FC<CertificationModalProps> = ({
@@ -29,6 +30,7 @@ export const CertificationModal: React.FC<CertificationModalProps> = ({
   reverseImage,
   onClose,
   onOpenConsultation,
+  onOpenReportStudio,
 }) => {
   const [copied, setCopied] = useState(false);
   const [activeView, setActiveView] = useState<'cert' | 'slab'>('cert');
@@ -65,6 +67,13 @@ export const CertificationModal: React.FC<CertificationModalProps> = ({
         {/* Top Control Bar */}
         <div className="bg-slate-900/90 border-b border-white/10 px-5 sm:px-8 py-4 flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-3">
+            <button
+              onClick={onClose}
+              className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-amber-400 text-xs font-black uppercase tracking-wider flex items-center gap-1.5 transition-all"
+            >
+              <ArrowLeft size={14} />
+              <span>Back</span>
+            </button>
             <div className="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center">
               <ShieldCheck size={18} />
             </div>
@@ -74,7 +83,7 @@ export const CertificationModal: React.FC<CertificationModalProps> = ({
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-wrap">
             {/* View Switcher */}
             <div className="bg-slate-800 p-1 rounded-xl flex border border-slate-700 text-xs font-bold">
               <button
@@ -96,6 +105,20 @@ export const CertificationModal: React.FC<CertificationModalProps> = ({
                 Encapsulated Slab
               </button>
             </div>
+
+            {onOpenReportStudio && (
+              <button
+                onClick={() => {
+                  onClose();
+                  onOpenReportStudio();
+                }}
+                className="px-3 py-1.5 bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/40 text-emerald-300 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-colors"
+                title="Generate PDF or JSON Summary Report"
+              >
+                <FileText size={14} />
+                <span>PDF / JSON</span>
+              </button>
+            )}
 
             {onOpenConsultation && (
               <button

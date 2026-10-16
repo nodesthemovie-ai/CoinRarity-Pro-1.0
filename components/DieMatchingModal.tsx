@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { X, Layers, Sparkles, ShieldCheck, CheckCircle2, AlertCircle, Compass } from 'lucide-react';
+import { X, ArrowLeft, Layers, Sparkles, ShieldCheck, CheckCircle2, AlertCircle, Compass } from 'lucide-react';
 import { DieMatchingResult } from '../types';
 
 interface DieMatchingModalProps {
@@ -29,7 +29,7 @@ export const DieMatchingModal: React.FC<DieMatchingModalProps> = ({
   };
 
   return (
-    <div id="die-matching-modal" className="fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+    <div id="die-matching-modal" className="fixed inset-0 z-[200] flex items-center justify-center p-2 sm:p-6 overflow-y-auto">
       {/* Backdrop */}
       <motion.div
         initial={{ opacity: 0 }}
@@ -47,17 +47,21 @@ export const DieMatchingModal: React.FC<DieMatchingModalProps> = ({
         className="relative z-10 w-full max-w-3xl bg-slate-950 border border-purple-500/40 rounded-3xl shadow-[0_0_80px_rgba(168,85,247,0.2)] overflow-hidden my-6"
       >
         {/* Header */}
-        <div className="p-5 border-b border-white/10 bg-slate-900/90 flex items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-purple-500/20 text-purple-400 border border-purple-500/30 flex items-center justify-center shrink-0">
-              <Layers size={22} />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="text-xs font-black uppercase tracking-wider text-purple-400">AI Die-Matching Engine</span>
+        <div className="p-4 sm:p-5 border-b border-white/10 bg-slate-900/90 flex items-center justify-between gap-3">
+          <div className="flex items-center gap-3 min-w-0">
+            <button
+              onClick={onClose}
+              className="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-amber-400 hover:text-amber-300 text-xs font-black uppercase tracking-wider flex items-center gap-1.5 transition-all shrink-0 active:scale-95"
+            >
+              <ArrowLeft size={14} />
+              <span>Back</span>
+            </button>
+            <div className="min-w-0">
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="text-[10px] font-black uppercase tracking-wider text-purple-400">AI Die-Matching Engine</span>
                 <span className="text-[10px] font-mono text-emerald-400">Match Confidence: {data.dieAuthenticityConfidence}%</span>
               </div>
-              <h3 className="text-base sm:text-lg font-bold text-white truncate max-w-md">
+              <h3 className="text-sm sm:text-lg font-bold text-white truncate">
                 Die Pair Recognition // {coinName}
               </h3>
             </div>
@@ -65,7 +69,7 @@ export const DieMatchingModal: React.FC<DieMatchingModalProps> = ({
 
           <button
             onClick={onClose}
-            className="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl transition-colors"
+            className="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl transition-colors shrink-0"
           >
             <X size={18} />
           </button>
