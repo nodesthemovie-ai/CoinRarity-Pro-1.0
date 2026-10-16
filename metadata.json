@@ -1,0 +1,10 @@
+{
+  "name": "CoinRarity Pro",
+  "description": "Professional forensic AI numismatic grading, variety attribution, 25-coin tray batch recognition, and valuation engine with voice narration.",
+  "requestFramePermissions": [
+    "camera"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
